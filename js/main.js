@@ -254,7 +254,13 @@ document.addEventListener("DOMContentLoaded", function () {
       currentGallery = ["./assets/screenshots/taskify/screenshot1.jpg"];
       useGradientBackground = false;
     } else if (projectName === "Faculty RAG Application") {
-      currentGallery = [];
+      currentGallery = [
+        "./assets/screenshots/rag-app/screenshot1.jpg",
+        "./assets/screenshots/rag-app/screenshot2.jpg",
+        "./assets/screenshots/rag-app/screenshot3.jpg",
+        "./assets/screenshots/rag-app/screenshot4.jpg",
+      ];
+      useGradientBackground = false;
     } else if (projectName === "Deleviro API") {
       currentGallery = [];
     } else {
