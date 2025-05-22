@@ -220,4 +220,267 @@ document.addEventListener("DOMContentLoaded", function () {
       hero.style.backgroundPositionY = scrollPosition * 0.5 + "px";
     }
   });
+
+  // Project Screenshots Gallery Functionality
+  const galleryModal = document.getElementById("galleryModal");
+  const galleryImage = document.querySelector(".gallery-image");
+  const galleryClose = document.querySelector(".gallery-close");
+  const galleryPrev = document.querySelector(".gallery-prev");
+  const galleryNext = document.querySelector(".gallery-next");
+  const galleryCounter = document.querySelector(".gallery-counter");
+  const projectImageHovers = document.querySelectorAll(".project-image-hover");
+  const projectLinks = document.querySelectorAll(
+    ".project-links a[aria-label='Screenshots Gallery']"
+  );
+
+  // Dynamic project gallery loader
+  const projectGalleries = {};
+
+  // Function to fetch screenshots for a project
+  async function fetchProjectScreenshots(projectName) {
+    const folderMap = {
+      "Faculty RAG Application": "rag-app",
+      "Travel Track": "travel-track",
+      Taskify: "taskify",
+      "Deleviro API": "deleviro",
+    };
+
+    const folderName =
+      folderMap[projectName] || projectName.toLowerCase().replace(/\s+/g, "-");
+    const basePath = `assets/screenshots/${folderName}`;
+
+    try {
+      // Initial list - this is a fallback in case fetch doesn't work in the environment
+      let screenshots = [];
+
+      // Try to scan for files ending with jpg, jpeg, or png
+      const fileExtensions = ["jpg", "jpeg", "png"];
+
+      // Check if the first screenshot exists (mandatory)
+      const img = new Image();
+      img.src = `${basePath}/screenshot1.jpg`;
+
+      // Add known screenshots based on file existence check
+      let index = 1;
+      let hasMore = true;
+
+      while (hasMore && index <= 10) {
+        // Cap at 10 screenshots max
+        for (const ext of fileExtensions) {
+          const path = `${basePath}/screenshot${index}.${ext}`;
+          const testImg = new Image();
+          testImg.src = path;
+
+          // If image loads, add it to screenshots
+          testImg.onload = function () {
+            if (!screenshots.includes(path)) {
+              screenshots.push(path);
+            }
+          };
+
+          // Try next extension if this one fails
+          testImg.onerror = function () {
+            // If we've tried all extensions for this index, move to next index
+            if (ext === fileExtensions[fileExtensions.length - 1]) {
+              hasMore = false;
+            }
+          };
+        }
+
+        index++;
+      }
+
+      // Fallback if no screenshots were found
+      if (screenshots.length === 0) {
+        if (folderName === "travel-track") {
+          screenshots = [
+            "assets/screenshots/travel-track/screenshot1.jpg",
+            "assets/screenshots/travel-track/screenshot2.jpg",
+          ];
+        } else {
+          screenshots = [`assets/project-placeholder.svg`];
+        }
+      }
+
+      return screenshots;
+    } catch (error) {
+      console.error("Error loading screenshots:", error);
+      return [`assets/project-placeholder.svg`];
+    }
+  }
+
+  // Initialize project galleries
+  async function initGalleries() {
+    // Get all project titles
+    const projectCards = document.querySelectorAll(".project-card");
+
+    for (const card of projectCards) {
+      const projectTitle = card.querySelector("h3").textContent;
+      // Load screenshots for this project
+      projectGalleries[projectTitle] = await fetchProjectScreenshots(
+        projectTitle
+      );
+
+      // Set the first screenshot as the project card image if it exists
+      const cardImage = card.querySelector(".project-image img");
+      if (
+        projectGalleries[projectTitle].length > 0 &&
+        projectGalleries[projectTitle][0] !== "assets/project-placeholder.svg"
+      ) {
+        cardImage.src = projectGalleries[projectTitle][0];
+      }
+    }
+  }
+
+  // Call the initialization
+  initGalleries();
+
+  let currentGallery = [];
+  let currentIndex = 0;
+
+  // Open gallery with enhanced animations
+  function openGallery(projectName) {
+    if (
+      projectGalleries[projectName] &&
+      projectGalleries[projectName].length > 0
+    ) {
+      currentGallery = projectGalleries[projectName];
+      currentIndex = 0;
+
+      // Reset any previous animations
+      galleryImage.style.opacity = 0;
+      galleryImage.style.transform = "scale(0.8)";
+
+      // Show the modal first
+      galleryModal.style.display = "flex";
+      galleryModal.style.opacity = 0;
+
+      // Fade in the modal
+      setTimeout(() => {
+        galleryModal.style.opacity = 1;
+        galleryModal.style.transition = "opacity 0.4s ease";
+      }, 10);
+
+      // Then update and animate the image
+      updateGalleryImage();
+      document.body.style.overflow = "hidden"; // Prevent scrolling
+    }
+  }
+
+  // Close gallery with fade-out animation
+  function closeGallery() {
+    galleryModal.style.opacity = 0;
+    galleryModal.style.transition = "opacity 0.4s ease";
+
+    // Remove the modal after animation completes
+    setTimeout(() => {
+      galleryModal.style.display = "none";
+      document.body.style.overflow = ""; // Restore scrolling
+    }, 400);
+  }
+
+  // Update gallery image with animation
+  function updateGalleryImage() {
+    if (currentGallery.length > 0) {
+      // Start with opacity 0
+      galleryImage.style.opacity = 0;
+      galleryImage.style.transform = "scale(0.8)";
+
+      // Set the src after a short delay
+      setTimeout(() => {
+        galleryImage.src = currentGallery[currentIndex];
+        galleryCounter.textContent = `${currentIndex + 1} / ${
+          currentGallery.length
+        }`;
+
+        // Fade in with a nice scale effect
+        galleryImage.style.transition =
+          "opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+        galleryImage.style.opacity = 1;
+        galleryImage.style.transform = "scale(1)";
+      }, 200);
+    }
+  }
+
+  // Next image with slide animation
+  function nextImage() {
+    if (currentIndex < currentGallery.length - 1) {
+      currentIndex++;
+    } else {
+      currentIndex = 0; // Loop back to first image
+    }
+
+    // Slide out to left
+    galleryImage.style.opacity = 0;
+    galleryImage.style.transform = "translateX(-50px) scale(0.9)";
+
+    // Update and slide in from right
+    setTimeout(() => {
+      updateGalleryImage();
+      galleryImage.style.transform = "translateX(0) scale(1)";
+    }, 200);
+  }
+
+  // Previous image with slide animation
+  function prevImage() {
+    if (currentIndex > 0) {
+      currentIndex--;
+    } else {
+      currentIndex = currentGallery.length - 1; // Loop to last image
+    }
+
+    // Slide out to right
+    galleryImage.style.opacity = 0;
+    galleryImage.style.transform = "translateX(50px) scale(0.9)";
+
+    // Update and slide in from left
+    setTimeout(() => {
+      updateGalleryImage();
+      galleryImage.style.transform = "translateX(0) scale(1)";
+    }, 200);
+  }
+
+  // Add event listeners
+  galleryClose.addEventListener("click", closeGallery);
+  galleryNext.addEventListener("click", nextImage);
+  galleryPrev.addEventListener("click", prevImage);
+
+  // Close on ESC key
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      closeGallery();
+    } else if (e.key === "ArrowRight") {
+      nextImage();
+    } else if (e.key === "ArrowLeft") {
+      prevImage();
+    }
+  });
+
+  // Close when clicking outside the image
+  galleryModal.addEventListener("click", function (e) {
+    if (e.target === galleryModal) {
+      closeGallery();
+    }
+  });
+
+  // Add click events to project images
+  projectImageHovers.forEach((projectImage) => {
+    const projectCard = projectImage.closest(".project-card");
+    const projectTitle = projectCard.querySelector("h3").textContent;
+
+    projectImage.addEventListener("click", function () {
+      openGallery(projectTitle);
+    });
+  });
+
+  // Add click events to gallery links
+  projectLinks.forEach((link) => {
+    const projectCard = link.closest(".project-card");
+    const projectTitle = projectCard.querySelector("h3").textContent;
+
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      openGallery(projectTitle);
+    });
+  });
 });

@@ -319,14 +319,16 @@
           <div class="timeline-item" data-aos="fade-up" data-aos-delay="400">
             <div class="timeline-dot"></div>
             <div class="timeline-content">
-              <div class="timeline-date">2024</div>
+              <div class="timeline-date">2025</div>
               <h3>Graduation Project</h3>
               <p class="timeline-company">University Project</p>
               <p>
-                Developed a RAG (Retrieval-Augmented Generation) application
-                using FastAPI and pre-trained AI models. Implemented natural
-                language processing techniques to enhance search functionality
-                and user experience.
+                Developed a RAG (Retrieval-Augmented Generation) application for
+                faculty students and parents to ask questions about the faculty
+                and receive accurate answers. Implemented admin features for
+                uploading PDFs, broadcasting messages, and managing content.
+                Created a comprehensive solution that enhances communication and
+                information accessibility.
               </p>
               <div class="timeline-tech">
                 <span>FastAPI</span>
@@ -334,6 +336,8 @@
                 <span>AI/ML</span>
                 <span>React</span>
                 <span>TypeScript</span>
+                <span>Vector DB</span>
+                <span>LLM</span>
               </div>
             </div>
           </div>
@@ -350,46 +354,60 @@
         </div>
         <div class="projects-grid">
           <div class="project-card" data-aos="fade-up">
-            <div class="project-image">
+            <div class="project-image project-image-hover">
               <img
-                src="assets/rag-ai-chatbot.jpg"
-                alt="RAG AI Chatbot"
+                src="assets/screenshots/rag-app/screenshot1.jpg"
+                alt="RAG Web Application"
                 onerror="this.src='assets/project-placeholder.svg'"
               />
+              <div class="project-overlay">
+                <div class="project-preview">
+                  <span><i class="fas fa-images"></i> View Gallery</span>
+                </div>
+              </div>
             </div>
             <div class="project-content">
-              <h3>RAG AI Chatbot</h3>
+              <h3>Faculty RAG Application</h3>
               <p>
-                A Retrieval-Augmented Generation application designed for
-                question answering. The app leverages a combination of
-                retrieval-based methods and generative models.
+                A comprehensive Retrieval-Augmented Generation web application
+                for faculty information. Students and parents can ask questions
+                about courses, admissions, and policies to receive accurate,
+                contextual answers. Admins can upload documents and broadcast
+                announcements.
               </p>
               <div class="project-tech">
                 <span>Python</span>
                 <span>FastAPI</span>
                 <span>React</span>
                 <span>AI/ML</span>
+                <span>Vector DB</span>
+                <span>PDF Processing</span>
               </div>
               <div class="project-links">
                 <a
-                  href="https://github.com/youssefarag2/RAG-AI-chatbot"
+                  href="https://github.com/youssefarag2/Retrieval-Augmented-Generation-Web-Application"
                   target="_blank"
                   aria-label="GitHub Repository"
                   ><i class="fab fa-github"></i
                 ></a>
-                <a href="#" target="_blank" aria-label="Live Demo"
-                  ><i class="fas fa-external-link-alt"></i
+                <a href="#" aria-label="Screenshots Gallery"
+                  ><i class="fas fa-images"></i
                 ></a>
               </div>
             </div>
           </div>
           <div class="project-card" data-aos="fade-up" data-aos-delay="200">
-            <div class="project-image">
+            <div class="project-image project-image-hover">
               <img
-                src="assets/travel-track.jpg"
+                src="assets/screenshots/travel-track/screenshot1.jpg"
                 alt="Travel Track"
                 onerror="this.src='assets/project-placeholder.svg'"
               />
+              <div class="project-overlay">
+                <div class="project-preview">
+                  <span><i class="fas fa-images"></i> View Gallery</span>
+                </div>
+              </div>
             </div>
             <div class="project-content">
               <h3>Travel Track</h3>
@@ -411,19 +429,24 @@
                   aria-label="GitHub Repository"
                   ><i class="fab fa-github"></i
                 ></a>
-                <a href="#" target="_blank" aria-label="Live Demo"
-                  ><i class="fas fa-external-link-alt"></i
+                <a href="#" aria-label="Screenshots Gallery"
+                  ><i class="fas fa-images"></i
                 ></a>
               </div>
             </div>
           </div>
           <div class="project-card" data-aos="fade-up" data-aos-delay="400">
-            <div class="project-image">
+            <div class="project-image project-image-hover">
               <img
-                src="assets/taskify.jpg"
+                src="assets/screenshots/taskify/screenshot1.jpg"
                 alt="Taskify"
                 onerror="this.src='assets/project-placeholder.svg'"
               />
+              <div class="project-overlay">
+                <div class="project-preview">
+                  <span><i class="fas fa-images"></i> View Gallery</span>
+                </div>
+              </div>
             </div>
             <div class="project-content">
               <h3>Taskify</h3>
@@ -445,32 +468,45 @@
                   aria-label="GitHub Repository"
                   ><i class="fab fa-github"></i
                 ></a>
-                <a href="#" target="_blank" aria-label="Live Demo"
-                  ><i class="fas fa-external-link-alt"></i
+                <a href="#" aria-label="Screenshots Gallery"
+                  ><i class="fas fa-images"></i
                 ></a>
               </div>
             </div>
           </div>
           <div class="project-card" data-aos="fade-up" data-aos-delay="600">
-            <div class="project-image">
-              <img
-                src="assets/deleviro.jpg"
-                alt="Deleviro"
-                onerror="this.src='assets/project-placeholder.svg'"
-              />
+            <div class="project-image project-image-hover api-project">
+              <div class="api-visualization">
+                <div class="api-icon">
+                  <i class="fas fa-server"></i>
+                </div>
+                <div class="api-endpoints">
+                  <div class="endpoint get">GET</div>
+                  <div class="endpoint post">POST</div>
+                  <div class="endpoint put">PUT</div>
+                  <div class="endpoint delete">DELETE</div>
+                </div>
+              </div>
+              <div class="project-overlay">
+                <div class="project-preview">
+                  <span><i class="fas fa-images"></i> View Gallery</span>
+                </div>
+              </div>
             </div>
             <div class="project-content">
-              <h3>Deleviro</h3>
+              <h3>Deleviro API</h3>
               <p>
-                A food delivery application with features for browsing
-                restaurants, placing orders, and tracking deliveries in
-                real-time.
+                A robust RESTful API for food delivery services. Features
+                include restaurant management, order processing, delivery
+                tracking, and user authentication. Frontend implementation is in
+                progress.
               </p>
               <div class="project-tech">
                 <span>TypeScript</span>
-                <span>React Native</span>
                 <span>Node.js</span>
                 <span>Express</span>
+                <span>MongoDB</span>
+                <span>RESTful API</span>
               </div>
               <div class="project-links">
                 <a
@@ -479,8 +515,8 @@
                   aria-label="GitHub Repository"
                   ><i class="fab fa-github"></i
                 ></a>
-                <a href="#" target="_blank" aria-label="Live Demo"
-                  ><i class="fas fa-external-link-alt"></i
+                <a href="#" aria-label="Screenshots Gallery"
+                  ><i class="fas fa-images"></i
                 ></a>
               </div>
             </div>
@@ -586,5 +622,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <!-- Main JavaScript -->
     <script src="js/main.js"></script>
+
+    <!-- Gallery Modal -->
+    <div id="galleryModal" class="gallery-modal">
+      <div class="gallery-content">
+        <span class="gallery-close"><i class="fas fa-times"></i></span>
+        <img src="" alt="Project Screenshot" class="gallery-image" />
+        <div class="gallery-nav gallery-prev">
+          <i class="fas fa-chevron-left"></i>
+        </div>
+        <div class="gallery-nav gallery-next">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+        <div class="gallery-counter">1 / 5</div>
+      </div>
+    </div>
   </body>
 </html>
