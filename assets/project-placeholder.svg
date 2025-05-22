@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <rect width="600" height="400" fill="#1a1a2e"/>
+  <rect x="10" y="10" width="580" height="380" stroke="#4a63e7" stroke-width="2" fill="none" rx="8" ry="8"/>
+  <text x="300" y="180" font-family="Arial, sans-serif" font-size="24" text-anchor="middle" fill="#ffffff">Project Image</text>
+  <text x="300" y="220" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#e6e6e6">Add your project screenshot here</text>
+  <path d="M280,250 L320,250 L320,270 L340,270 L300,310 L260,270 L280,270 Z" fill="#4a63e7"/>
+</svg> 

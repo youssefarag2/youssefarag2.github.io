@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="1920" height="1080" fill="#0f0f1b"/>
+  <g opacity="0.05">
+    <!-- Code Symbols Pattern -->
+    <text x="100" y="100" font-family="monospace" font-size="24" fill="#ffffff">&lt;html&gt;</text>
+    <text x="150" y="140" font-family="monospace" font-size="20" fill="#ffffff">&lt;head&gt;</text>
+    <text x="200" y="180" font-family="monospace" font-size="18" fill="#ffffff">&lt;title&gt;Youssef Farag&lt;/title&gt;</text>
+    <text x="150" y="220" font-family="monospace" font-size="20" fill="#ffffff">&lt;/head&gt;</text>
+    <text x="150" y="260" font-family="monospace" font-size="20" fill="#ffffff">&lt;body&gt;</text>
+    
+    <text x="200" y="300" font-family="monospace" font-size="18" fill="#ffffff">function Developer() {</text>
+    <text x="250" y="340" font-family="monospace" font-size="16" fill="#ffffff">return {</text>
+    <text x="300" y="380" font-family="monospace" font-size="16" fill="#ffffff">name: 'Youssef',</text>
+    <text x="300" y="420" font-family="monospace" font-size="16" fill="#ffffff">skills: ['React', 'Django', 'Node.js'],</text>
+    <text x="300" y="460" font-family="monospace" font-size="16" fill="#ffffff">passion: 'Building amazing web apps'</text>
+    <text x="250" y="500" font-family="monospace" font-size="16" fill="#ffffff">};</text>
+    <text x="200" y="540" font-family="monospace" font-size="18" fill="#ffffff">}</text>
+    
+    <text x="700" y="200" font-family="monospace" font-size="18" fill="#ffffff">.container {</text>
+    <text x="750" y="240" font-family="monospace" font-size="16" fill="#ffffff">display: flex;</text>
+    <text x="750" y="280" font-family="monospace" font-size="16" fill="#ffffff">flex-direction: column;</text>
+    <text x="750" y="320" font-family="monospace" font-size="16" fill="#ffffff">align-items: center;</text>
+    <text x="700" y="360" font-family="monospace" font-size="18" fill="#ffffff">}</text>
+    
+    <text x="1200" y="150" font-family="monospace" font-size="20" fill="#ffffff">import React from 'react';</text>
+    <text x="1200" y="190" font-family="monospace" font-size="20" fill="#ffffff">import { Skills } from './skills';</text>
+    <text x="1200" y="230" font-family="monospace" font-size="20" fill="#ffffff">import { Projects } from './projects';</text>
+    
+    <text x="1200" y="300" font-family="monospace" font-size="18" fill="#ffffff">const Portfolio = () => {</text>
+    <text x="1250" y="340" font-family="monospace" font-size="16" fill="#ffffff">return (</text>
+    <text x="1300" y="380" font-family="monospace" font-size="16" fill="#ffffff">&lt;div className="portfolio"&gt;</text>
+    <text x="1350" y="420" font-family="monospace" font-size="16" fill="#ffffff">&lt;Skills /&gt;</text>
+    <text x="1350" y="460" font-family="monospace" font-size="16" fill="#ffffff">&lt;Projects /&gt;</text>
+    <text x="1300" y="500" font-family="monospace" font-size="16" fill="#ffffff">&lt;/div&gt;</text>
+    <text x="1250" y="540" font-family="monospace" font-size="16" fill="#ffffff">);</text>
+    <text x="1200" y="580" font-family="monospace" font-size="18" fill="#ffffff">};</text>
+    
+    <text x="500" y="650" font-family="monospace" font-size="18" fill="#ffffff">def create_app():</text>
+    <text x="550" y="690" font-family="monospace" font-size="16" fill="#ffffff">app = FastAPI()</text>
+    <text x="550" y="730" font-family="monospace" font-size="16" fill="#ffffff">return app</text>
+    
+    <text x="900" y="650" font-family="monospace" font-size="18" fill="#ffffff">app.get('/api/projects')</text>
+    <text x="950" y="690" font-family="monospace" font-size="16" fill="#ffffff">async def get_projects():</text>
+    <text x="1000" y="730" font-family="monospace" font-size="16" fill="#ffffff">return {"projects": db.fetch_all()}</text>
+    
+    <text x="150" y="800" font-family="monospace" font-size="20" fill="#ffffff">&lt;/body&gt;</text>
+    <text x="100" y="840" font-family="monospace" font-size="24" fill="#ffffff">&lt;/html&gt;</text>
+    
+    <!-- Abstract Tech Elements -->
+    <circle cx="1600" cy="200" r="50" fill="none" stroke="#4a63e7" stroke-width="2"/>
+    <circle cx="1650" cy="250" r="30" fill="none" stroke="#4a63e7" stroke-width="2"/>
+    <circle cx="1550" cy="250" r="20" fill="none" stroke="#4a63e7" stroke-width="2"/>
+    
+    <path d="M1600,200 L1650,250" stroke="#4a63e7" stroke-width="1"/>
+    <path d="M1600,200 L1550,250" stroke="#4a63e7" stroke-width="1"/>
+    
+    <rect x="300" y="600" width="100" height="100" fill="none" stroke="#4a63e7" stroke-width="2"/>
+    <rect x="350" y="650" width="100" height="100" fill="none" stroke="#4a63e7" stroke-width="2"/>
+    
+    <path d="M300,600 L350,650" stroke="#4a63e7" stroke-width="1"/>
+    <path d="M400,600 L450,650" stroke="#4a63e7" stroke-width="1"/>
+    <path d="M300,700 L350,750" stroke="#4a63e7" stroke-width="1"/>
+    <path d="M400,700 L450,750" stroke="#4a63e7" stroke-width="1"/>
+    
+    <!-- Grid Lines -->
+    <path d="M0,200 L1920,200" stroke="#4a63e7" stroke-width="0.5" opacity="0.2"/>
+    <path d="M0,400 L1920,400" stroke="#4a63e7" stroke-width="0.5" opacity="0.2"/>
+    <path d="M0,600 L1920,600" stroke="#4a63e7" stroke-width="0.5" opacity="0.2"/>
+    <path d="M0,800 L1920,800" stroke="#4a63e7" stroke-width="0.5" opacity="0.2"/>
+    <path d="M0,1000 L1920,1000" stroke="#4a63e7" stroke-width="0.5" opacity="0.2"/>
+    
+    <path d="M200,0 L200,1080" stroke="#4a63e7" stroke-width="0.5" opacity="0.2"/>
+    <path d="M400,0 L400,1080" stroke="#4a63e7" stroke-width="0.5" opacity="0.2"/>
+    <path d="M600,0 L600,1080" stroke="#4a63e7" stroke-width="0.5" opacity="0.2"/>
+    <path d="M800,0 L800,1080" stroke="#4a63e7" stroke-width="0.5" opacity="0.2"/>
+    <path d="M1000,0 L1000,1080" stroke="#4a63e7" stroke-width="0.5" opacity="0.2"/>
+    <path d="M1200,0 L1200,1080" stroke="#4a63e7" stroke-width="0.5" opacity="0.2"/>
+    <path d="M1400,0 L1400,1080" stroke="#4a63e7" stroke-width="0.5" opacity="0.2"/>
+    <path d="M1600,0 L1600,1080" stroke="#4a63e7" stroke-width="0.5" opacity="0.2"/>
+    <path d="M1800,0 L1800,1080" stroke="#4a63e7" stroke-width="0.5" opacity="0.2"/>
+  </g>
+</svg> 
