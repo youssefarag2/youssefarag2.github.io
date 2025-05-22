@@ -221,182 +221,70 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Project Screenshots Gallery Functionality
+  // Project Screenshots Gallery Functionality - Simplified for GitHub Pages
   const galleryModal = document.getElementById("galleryModal");
   const galleryImage = document.querySelector(".gallery-image");
   const galleryClose = document.querySelector(".gallery-close");
   const galleryPrev = document.querySelector(".gallery-prev");
   const galleryNext = document.querySelector(".gallery-next");
   const galleryCounter = document.querySelector(".gallery-counter");
-  const projectImageHovers = document.querySelectorAll(".project-image-hover");
-  const projectLinks = document.querySelectorAll(".gallery-link");
 
-  // Dynamic project gallery loader
-  const projectGalleries = {};
-
-  // Function to fetch screenshots for a project
-  async function fetchProjectScreenshots(projectName) {
-    const folderMap = {
-      "Faculty RAG Application": "rag-app",
-      "Travel Track": "travel-track",
-      Taskify: "taskify",
-      "Deleviro API": "deleviro",
-    };
-
-    const folderName =
-      folderMap[projectName] || projectName.toLowerCase().replace(/\s+/g, "-");
-    const basePath = `assets/screenshots/${folderName}`;
-
-    // Predefined screenshots for each project - GitHub Pages compatible approach
-    const predefinedScreenshots = {
-      "travel-track": [
-        "assets/screenshots/travel-track/screenshot1.jpg",
-        "assets/screenshots/travel-track/screenshot2.jpg",
-      ],
-      "rag-app": [
-        "assets/screenshots/rag-app/screenshot1.jpg",
-        "assets/screenshots/rag-app/screenshot2.jpg",
-        "assets/screenshots/rag-app/screenshot3.jpg",
-        "assets/screenshots/rag-app/screenshot4.jpg",
-      ],
-      taskify: [
-        "assets/screenshots/taskify/screenshot1.jpg",
-        "assets/screenshots/taskify/screenshot2.jpg",
-        "assets/screenshots/taskify/screenshot3.jpg",
-      ],
-      deleviro: [
-        "assets/screenshots/deleviro/screenshot1.jpg",
-        "assets/screenshots/deleviro/screenshot2.jpg",
-        "assets/screenshots/deleviro/screenshot3.jpg",
-      ],
-    };
-
-    // Use predefined screenshots if available, otherwise generate paths
-    let screenshots = predefinedScreenshots[folderName] || [];
-
-    // If no predefined screenshots, try the first screenshot only (without dynamic checking)
-    if (screenshots.length === 0) {
-      screenshots = [`${basePath}/screenshot1.jpg`];
-    }
-
-    return screenshots;
-  }
-
-  // Initialize project galleries
-  async function initGalleries() {
-    // Get all project titles
-    const projectCards = document.querySelectorAll(".project-card");
-
-    for (const card of projectCards) {
-      const projectTitle = card.querySelector("h3").textContent;
-      // Load screenshots for this project
-      projectGalleries[projectTitle] = await fetchProjectScreenshots(
-        projectTitle
-      );
-
-      // Set the first screenshot as the project card image if it exists
-      const cardImage = card.querySelector(".project-image img");
-      if (projectGalleries[projectTitle].length > 0) {
-        // Set the image but keep the onerror handler as fallback
-        cardImage.src = projectGalleries[projectTitle][0];
-      }
-    }
-  }
-
-  // Call the initialization
-  initGalleries();
+  // Simple, reliable gallery data for GitHub Pages
+  const projectGalleries = {
+    "Faculty RAG Application": ["assets/project-placeholder.svg"],
+    "Travel Track": [
+      "assets/screenshots/travel-track/screenshot1.jpg",
+      "assets/screenshots/travel-track/screenshot2.jpg",
+    ],
+    Taskify: ["assets/project-placeholder.svg"],
+    "Deleviro API": ["assets/project-placeholder.svg"],
+  };
 
   let currentGallery = [];
   let currentIndex = 0;
 
-  // Open gallery with enhanced animations
+  // Simplified gallery open function
   function openGallery(projectName) {
-    if (
-      projectGalleries[projectName] &&
-      projectGalleries[projectName].length > 0
-    ) {
+    console.log("Opening gallery for:", projectName);
+
+    if (projectGalleries[projectName]) {
       currentGallery = projectGalleries[projectName];
       currentIndex = 0;
 
-      // Reset any previous animations
-      galleryImage.style.opacity = 0;
-      galleryImage.style.transform = "scale(0.8)";
-
-      // Show the modal first
+      // Show modal immediately to avoid timing issues
       galleryModal.style.display = "flex";
-      galleryModal.style.opacity = 0;
 
-      // Fade in the modal
+      // Set the image
+      galleryImage.src = currentGallery[currentIndex];
+      galleryCounter.textContent = `${currentIndex + 1} / ${
+        currentGallery.length
+      }`;
+
+      // Fade in
       setTimeout(() => {
         galleryModal.style.opacity = 1;
-        galleryModal.style.transition = "opacity 0.4s ease";
       }, 10);
 
-      // Add error handling for images
-      galleryImage.onerror = function () {
-        console.warn(`Failed to load image: ${currentGallery[currentIndex]}`);
-        // Try to load the next image or show a placeholder
-        if (currentIndex < currentGallery.length - 1) {
-          currentIndex++;
-          updateGalleryImage();
-        } else {
-          // If no images can be loaded, show placeholder
-          galleryImage.src = "assets/project-placeholder.svg";
-          galleryImage.style.opacity = 1;
-          galleryImage.style.transform = "scale(1)";
-        }
-      };
-
-      // Then update and animate the image
-      updateGalleryImage();
       document.body.style.overflow = "hidden"; // Prevent scrolling
+      console.log("Gallery opened with image:", galleryImage.src);
+    } else {
+      console.error("No gallery found for project:", projectName);
     }
   }
 
-  // Close gallery with fade-out animation
+  // Close gallery
   function closeGallery() {
     galleryModal.style.opacity = 0;
-    galleryModal.style.transition = "opacity 0.4s ease";
 
-    // Remove the modal after animation completes
     setTimeout(() => {
       galleryModal.style.display = "none";
       document.body.style.overflow = ""; // Restore scrolling
     }, 400);
+
+    console.log("Gallery closed");
   }
 
-  // Update gallery image with animation
-  function updateGalleryImage() {
-    if (currentGallery.length > 0) {
-      // Start with opacity 0
-      galleryImage.style.opacity = 0;
-      galleryImage.style.transform = "scale(0.8)";
-
-      // Set the src after a short delay
-      setTimeout(() => {
-        // Reset error handler before setting new src
-        galleryImage.onerror = function () {
-          console.warn(`Failed to load image: ${currentGallery[currentIndex]}`);
-          galleryImage.src = "assets/project-placeholder.svg";
-          galleryImage.style.opacity = 1;
-          galleryImage.style.transform = "scale(1)";
-        };
-
-        galleryImage.src = currentGallery[currentIndex];
-        galleryCounter.textContent = `${currentIndex + 1} / ${
-          currentGallery.length
-        }`;
-
-        // Fade in with a nice scale effect
-        galleryImage.style.transition =
-          "opacity 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
-        galleryImage.style.opacity = 1;
-        galleryImage.style.transform = "scale(1)";
-      }, 200);
-    }
-  }
-
-  // Next image with slide animation
+  // Next image
   function nextImage() {
     if (currentIndex < currentGallery.length - 1) {
       currentIndex++;
@@ -404,18 +292,14 @@ document.addEventListener("DOMContentLoaded", function () {
       currentIndex = 0; // Loop back to first image
     }
 
-    // Slide out to left
-    galleryImage.style.opacity = 0;
-    galleryImage.style.transform = "translateX(-50px) scale(0.9)";
-
-    // Update and slide in from right
-    setTimeout(() => {
-      updateGalleryImage();
-      galleryImage.style.transform = "translateX(0) scale(1)";
-    }, 200);
+    galleryImage.src = currentGallery[currentIndex];
+    galleryCounter.textContent = `${currentIndex + 1} / ${
+      currentGallery.length
+    }`;
+    console.log("Next image:", galleryImage.src);
   }
 
-  // Previous image with slide animation
+  // Previous image
   function prevImage() {
     if (currentIndex > 0) {
       currentIndex--;
@@ -423,29 +307,58 @@ document.addEventListener("DOMContentLoaded", function () {
       currentIndex = currentGallery.length - 1; // Loop to last image
     }
 
-    // Slide out to right
-    galleryImage.style.opacity = 0;
-    galleryImage.style.transform = "translateX(50px) scale(0.9)";
-
-    // Update and slide in from left
-    setTimeout(() => {
-      updateGalleryImage();
-      galleryImage.style.transform = "translateX(0) scale(1)";
-    }, 200);
+    galleryImage.src = currentGallery[currentIndex];
+    galleryCounter.textContent = `${currentIndex + 1} / ${
+      currentGallery.length
+    }`;
+    console.log("Previous image:", galleryImage.src);
   }
 
-  // Add event listeners
+  // Add click events directly - guaranteed to work approach
+  document.querySelectorAll(".project-card").forEach((card) => {
+    const projectTitle = card.querySelector("h3").textContent;
+    console.log("Found project:", projectTitle);
+
+    // Add click to image
+    const projectImage = card.querySelector(".project-image-hover");
+    if (projectImage) {
+      projectImage.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("Image clicked for:", projectTitle);
+        openGallery(projectTitle);
+        return false;
+      });
+    }
+
+    // Add click to gallery link
+    const galleryLink = card.querySelector(".gallery-link");
+    if (galleryLink) {
+      galleryLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("Gallery link clicked for:", projectTitle);
+        openGallery(projectTitle);
+        return false;
+      });
+    }
+  });
+
+  // Event listeners for gallery controls
   galleryClose.addEventListener("click", closeGallery);
   galleryNext.addEventListener("click", nextImage);
   galleryPrev.addEventListener("click", prevImage);
 
   // Close on ESC key
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") {
+    if (e.key === "Escape" && galleryModal.style.display === "flex") {
       closeGallery();
-    } else if (e.key === "ArrowRight") {
+    } else if (
+      e.key === "ArrowRight" &&
+      galleryModal.style.display === "flex"
+    ) {
       nextImage();
-    } else if (e.key === "ArrowLeft") {
+    } else if (e.key === "ArrowLeft" && galleryModal.style.display === "flex") {
       prevImage();
     }
   });
@@ -457,25 +370,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Add click events to project images
-  projectImageHovers.forEach((projectImage) => {
-    const projectCard = projectImage.closest(".project-card");
-    const projectTitle = projectCard.querySelector("h3").textContent;
-
-    projectImage.addEventListener("click", function (e) {
-      e.preventDefault();
-      openGallery(projectTitle);
-    });
-  });
-
-  // Add click events to gallery links
-  projectLinks.forEach((link) => {
-    const projectCard = link.closest(".project-card");
-    const projectTitle = projectCard.querySelector("h3").textContent;
-
-    link.addEventListener("click", function (e) {
-      e.preventDefault();
-      openGallery(projectTitle);
-    });
-  });
+  // Special handler for Deleviro API card
+  const deleviroCard = document.querySelector(".project-card:nth-child(4)");
+  if (deleviroCard) {
+    console.log("Found Deleviro API card, adding special handler");
+    const apiProject = deleviroCard.querySelector(".api-project");
+    if (apiProject) {
+      apiProject.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("API visualization clicked");
+        openGallery("Deleviro API");
+        return false;
+      });
+    }
+  }
 });
