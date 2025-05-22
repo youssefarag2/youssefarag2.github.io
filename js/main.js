@@ -243,24 +243,20 @@ document.addEventListener("DOMContentLoaded", function () {
     // Default to showing gradient background for projects without screenshots
     let useGradientBackground = true;
 
-    // Create gallery based on project name
+    // Create gallery based on project name with relative paths (for GitHub Pages compatibility)
     if (projectName === "Travel Track") {
       currentGallery = [
-        "assets/screenshots/travel-track/screenshot1.jpg",
-        "assets/screenshots/travel-track/screenshot2.jpg",
+        "./assets/screenshots/travel-track/screenshot1.jpg",
+        "./assets/screenshots/travel-track/screenshot2.jpg",
       ];
       useGradientBackground = false;
     } else if (projectName === "Taskify") {
-      currentGallery = ["assets/screenshots/taskify/screenshot1.jpg"];
+      currentGallery = ["./assets/screenshots/taskify/screenshot1.jpg"];
       useGradientBackground = false;
     } else if (projectName === "Faculty RAG Application") {
-      currentGallery = ["assets/screenshots/rag-app/screenshot1.jpg"].filter(
-        () => false
-      ); // No images yet
+      currentGallery = [];
     } else if (projectName === "Deleviro API") {
-      currentGallery = ["assets/screenshots/deleviro/screenshot1.jpg"].filter(
-        () => false
-      ); // No images yet
+      currentGallery = [];
     } else {
       console.log("No gallery images available for:", projectName);
       // Show modal with gradient background for projects without screenshots
@@ -432,4 +428,19 @@ document.addEventListener("DOMContentLoaded", function () {
     galleryNext.style.display = "none";
     galleryCounter.style.display = "none";
   };
+
+  // Debug image loading
+  galleryImage.onload = function () {
+    console.log("Successfully loaded gallery image:", this.src);
+  };
+
+  // Check if images are loading in project cards
+  document.querySelectorAll(".project-image img").forEach((img) => {
+    img.onload = function () {
+      console.log("Project image loaded successfully:", this.src);
+    };
+    img.onerror = function () {
+      console.log("Failed to load project image:", this.src);
+    };
+  });
 });
