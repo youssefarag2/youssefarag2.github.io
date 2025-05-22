@@ -229,9 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const galleryNext = document.querySelector(".gallery-next");
   const galleryCounter = document.querySelector(".gallery-counter");
   const projectImageHovers = document.querySelectorAll(".project-image-hover");
-  const projectLinks = document.querySelectorAll(
-    ".project-links a[aria-label='Screenshots Gallery']"
-  );
+  const projectLinks = document.querySelectorAll(".gallery-link");
 
   // Dynamic project gallery loader
   const projectGalleries = {};
@@ -249,64 +247,39 @@ document.addEventListener("DOMContentLoaded", function () {
       folderMap[projectName] || projectName.toLowerCase().replace(/\s+/g, "-");
     const basePath = `assets/screenshots/${folderName}`;
 
-    try {
-      // Initial list - this is a fallback in case fetch doesn't work in the environment
-      let screenshots = [];
+    // Predefined screenshots for each project - GitHub Pages compatible approach
+    const predefinedScreenshots = {
+      "travel-track": [
+        "assets/screenshots/travel-track/screenshot1.jpg",
+        "assets/screenshots/travel-track/screenshot2.jpg",
+      ],
+      "rag-app": [
+        "assets/screenshots/rag-app/screenshot1.jpg",
+        "assets/screenshots/rag-app/screenshot2.jpg",
+        "assets/screenshots/rag-app/screenshot3.jpg",
+        "assets/screenshots/rag-app/screenshot4.jpg",
+      ],
+      taskify: [
+        "assets/screenshots/taskify/screenshot1.jpg",
+        "assets/screenshots/taskify/screenshot2.jpg",
+        "assets/screenshots/taskify/screenshot3.jpg",
+      ],
+      deleviro: [
+        "assets/screenshots/deleviro/screenshot1.jpg",
+        "assets/screenshots/deleviro/screenshot2.jpg",
+        "assets/screenshots/deleviro/screenshot3.jpg",
+      ],
+    };
 
-      // Try to scan for files ending with jpg, jpeg, or png
-      const fileExtensions = ["jpg", "jpeg", "png"];
+    // Use predefined screenshots if available, otherwise generate paths
+    let screenshots = predefinedScreenshots[folderName] || [];
 
-      // Check if the first screenshot exists (mandatory)
-      const img = new Image();
-      img.src = `${basePath}/screenshot1.jpg`;
-
-      // Add known screenshots based on file existence check
-      let index = 1;
-      let hasMore = true;
-
-      while (hasMore && index <= 10) {
-        // Cap at 10 screenshots max
-        for (const ext of fileExtensions) {
-          const path = `${basePath}/screenshot${index}.${ext}`;
-          const testImg = new Image();
-          testImg.src = path;
-
-          // If image loads, add it to screenshots
-          testImg.onload = function () {
-            if (!screenshots.includes(path)) {
-              screenshots.push(path);
-            }
-          };
-
-          // Try next extension if this one fails
-          testImg.onerror = function () {
-            // If we've tried all extensions for this index, move to next index
-            if (ext === fileExtensions[fileExtensions.length - 1]) {
-              hasMore = false;
-            }
-          };
-        }
-
-        index++;
-      }
-
-      // Fallback if no screenshots were found
-      if (screenshots.length === 0) {
-        if (folderName === "travel-track") {
-          screenshots = [
-            "assets/screenshots/travel-track/screenshot1.jpg",
-            "assets/screenshots/travel-track/screenshot2.jpg",
-          ];
-        } else {
-          screenshots = [`assets/project-placeholder.svg`];
-        }
-      }
-
-      return screenshots;
-    } catch (error) {
-      console.error("Error loading screenshots:", error);
-      return [`assets/project-placeholder.svg`];
+    // If no predefined screenshots, try the first screenshot only (without dynamic checking)
+    if (screenshots.length === 0) {
+      screenshots = [`${basePath}/screenshot1.jpg`];
     }
+
+    return screenshots;
   }
 
   // Initialize project galleries
@@ -323,10 +296,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Set the first screenshot as the project card image if it exists
       const cardImage = card.querySelector(".project-image img");
-      if (
-        projectGalleries[projectTitle].length > 0 &&
-        projectGalleries[projectTitle][0] !== "assets/project-placeholder.svg"
-      ) {
+      if (projectGalleries[projectTitle].length > 0) {
+        // Set the image but keep the onerror handler as fallback
         cardImage.src = projectGalleries[projectTitle][0];
       }
     }
@@ -361,6 +332,21 @@ document.addEventListener("DOMContentLoaded", function () {
         galleryModal.style.transition = "opacity 0.4s ease";
       }, 10);
 
+      // Add error handling for images
+      galleryImage.onerror = function () {
+        console.warn(`Failed to load image: ${currentGallery[currentIndex]}`);
+        // Try to load the next image or show a placeholder
+        if (currentIndex < currentGallery.length - 1) {
+          currentIndex++;
+          updateGalleryImage();
+        } else {
+          // If no images can be loaded, show placeholder
+          galleryImage.src = "assets/project-placeholder.svg";
+          galleryImage.style.opacity = 1;
+          galleryImage.style.transform = "scale(1)";
+        }
+      };
+
       // Then update and animate the image
       updateGalleryImage();
       document.body.style.overflow = "hidden"; // Prevent scrolling
@@ -388,6 +374,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Set the src after a short delay
       setTimeout(() => {
+        // Reset error handler before setting new src
+        galleryImage.onerror = function () {
+          console.warn(`Failed to load image: ${currentGallery[currentIndex]}`);
+          galleryImage.src = "assets/project-placeholder.svg";
+          galleryImage.style.opacity = 1;
+          galleryImage.style.transform = "scale(1)";
+        };
+
         galleryImage.src = currentGallery[currentIndex];
         galleryCounter.textContent = `${currentIndex + 1} / ${
           currentGallery.length
@@ -468,7 +462,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const projectCard = projectImage.closest(".project-card");
     const projectTitle = projectCard.querySelector("h3").textContent;
 
-    projectImage.addEventListener("click", function () {
+    projectImage.addEventListener("click", function (e) {
+      e.preventDefault();
       openGallery(projectTitle);
     });
   });
